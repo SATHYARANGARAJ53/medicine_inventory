@@ -1,0 +1,34 @@
+<h2>Medicine List</h2>
+<a href="{% url 'add_medicine' %}">Add Medicine</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Expiry Date</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+    </tr>
+    {% for medicine in medicines %}
+    <tr>
+        <td>{{medicine.medicine_id}}</td>
+        <td>{{ medicine.name }}</td>
+        <td>{{ medicine.price }}</td>
+        <td>{{ medicine.expiry_date }}</td>
+        <td>{{ medicine.quantity_available }}</td>
+        <td>
+            
+            {% if medicine.medicine_id %}
+                <a href="{% url 'medicine_detail' medicine.medicine_id %}">View</a> |
+                <a href="{% url 'update_medicine' medicine.medicine_id %}">Edit</a> |
+                <form action="{% url 'delete_medicine' medicine.medicine_id %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            {% else %}
+                <p><strong>Error:</strong> Invalid Medicine Data</p>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
