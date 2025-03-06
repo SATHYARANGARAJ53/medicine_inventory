@@ -1,1 +1,1 @@
-# medical_shop
+# medicine_inventory
