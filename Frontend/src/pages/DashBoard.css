@@ -10,3 +10,18 @@
     width: 30em;
     height: 3.5em;
 }
+
+
+.billSection{
+  display: flex;
+  gap: 1em;
+  justify-content: flex-end;
+}
+.group{
+  display: flex;
+  gap: 1em;
+}
+table td{
+  padding-top: 1.5em !important;
+  padding-bottom: 1.5em !important;
+}
