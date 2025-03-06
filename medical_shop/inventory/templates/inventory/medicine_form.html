@@ -1,0 +1,7 @@
+<h2>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Medicine</h2>
+<form method="POST" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'medicine_list' %}">Cancel</a>
