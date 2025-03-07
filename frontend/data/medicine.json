@@ -1,0 +1,123 @@
+[
+    {
+      "s.no": 1,
+      "Tablet Name": "Paracetamol",
+      "Available Quantity": 150,
+      "Expiry Date": "2026-08-15"
+    },
+    {
+      "s.no": 2,
+      "Tablet Name": "Ibuprofen",
+      "Available Quantity": 120,
+      "Expiry Date": "2025-12-20"
+    },
+    {
+      "s.no": 3,
+      "Tablet Name": "Aspirin",
+      "Available Quantity": 90,
+      "Expiry Date": "2026-06-10"
+    },
+    {
+      "s.no": 4,
+      "Tablet Name": "Cetirizine",
+      "Available Quantity": 200,
+      "Expiry Date": "2027-04-25"
+    },
+    {
+      "s.no": 5,
+      "Tablet Name": "Amoxicillin",
+      "Available Quantity": 80,
+      "Expiry Date": "2025-11-30"
+    },
+    {
+      "s.no": 6,
+      "Tablet Name": "Dolo 650",
+      "Available Quantity": 170,
+      "Expiry Date": "2026-09-12"
+    },
+    {
+      "s.no": 7,
+      "Tablet Name": "Metformin",
+      "Available Quantity": 110,
+      "Expiry Date": "2026-02-18"
+    },
+    {
+      "s.no": 8,
+      "Tablet Name": "Atorvastatin",
+      "Available Quantity": 95,
+      "Expiry Date": "2027-08-05"
+    },
+    {
+      "s.no": 9,
+      "Tablet Name": "Losartan",
+      "Available Quantity": 85,
+      "Expiry Date": "2025-07-20"
+    },
+    {
+      "s.no": 10,
+      "Tablet Name": "Omeprazole",
+      "Available Quantity": 130,
+      "Expiry Date": "2026-12-15"
+    },
+    {
+      "s.no": 11,
+      "Tablet Name": "Levocetirizine",
+      "Available Quantity": 140,
+      "Expiry Date": "2026-03-14"
+    },
+    {
+      "s.no": 12,
+      "Tablet Name": "Clopidogrel",
+      "Available Quantity": 100,
+      "Expiry Date": "2027-01-29"
+    },
+    {
+      "s.no": 13,
+      "Tablet Name": "Montelukast",
+      "Available Quantity": 75,
+      "Expiry Date": "2025-10-08"
+    },
+    {
+      "s.no": 14,
+      "Tablet Name": "Pantoprazole",
+      "Available Quantity": 160,
+      "Expiry Date": "2026-07-01"
+    },
+    {
+      "s.no": 15,
+      "Tablet Name": "Fexofenadine",
+      "Available Quantity": 115,
+      "Expiry Date": "2027-05-22"
+    },
+    {
+      "s.no": 16,
+      "Tablet Name": "Ranitidine",
+      "Available Quantity": 125,
+      "Expiry Date": "2025-06-30"
+    },
+    {
+      "s.no": 17,
+      "Tablet Name": "Diclofenac",
+      "Available Quantity": 70,
+      "Expiry Date": "2026-01-10"
+    },
+    {
+      "s.no": 18,
+      "Tablet Name": "Amlodipine",
+      "Available Quantity": 105,
+      "Expiry Date": "2027-03-19"
+    },
+    {
+      "s.no": 19,
+      "Tablet Name": "Hydroxyzine",
+      "Available Quantity": 155,
+      "Expiry Date": "2026-11-11"
+    },
+    {
+      "s.no": 20,
+      "Tablet Name": "Ciprofloxacin",
+      "Available Quantity": 98,
+      "Expiry Date": "2025-09-05"
+    }
+  ]
+  
