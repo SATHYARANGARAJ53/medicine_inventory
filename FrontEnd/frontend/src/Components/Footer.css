@@ -1,0 +1,41 @@
+.footer{
+    padding-top: 1em;
+    background-color: #230808;
+    height: 20vh;
+    color: #fff;
+}
+p,h5{
+    text-align: center;
+}
+h5{
+    margin-bottom: 2em;
+}
+.social-media{
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+.social-media a{
+    font-size: 2em;
+}
+.Facebook:hover{
+   cursor: pointer;
+   color: rgb(15, 29, 156);
+}
+.Instagram:hover{
+    cursor: pointer;
+    color: deeppink;
+}
+.Youtube:hover{
+    cursor: pointer;
+    color:red;
+}
+.Whatsapp:hover{
+    cursor: pointer;
+    color: green;
+}
+.X:hover{
+    cursor: pointer;
+    color: gray;
+}
