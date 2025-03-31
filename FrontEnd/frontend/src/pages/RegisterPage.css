@@ -1,0 +1,50 @@
+body{
+  width: 100vw;
+  height: 100vh;
+}
+.register-block {
+  float: left;
+  width: 100%;
+  padding: 50px 0;
+ 
+}
+/* https://cdn.flashtalking.com/190737/4600367/FY24Q1_CC_Individual_CCIAllApps_in_en_UnWrp-NoCreator_AN_300x250.gif?238785384 */
+/* https://wallpaperaccess.com/full/5004698.jpg */
+.container {
+  background-color: #343a40e3;
+  border-radius: 10px;
+  width: 40%;
+  height: 40%;
+  margin-top: 10em;
+}
+
+.register-sec {
+  padding: 50px 30px;
+  position: relative;
+}
+.register-sec h2 {
+  margin-bottom: 30px;
+  font-weight: 800;
+  font-size: 30px;
+  color: #189bdd;
+}
+.register-sec h2:after {
+  content: " ";
+  width: 100px;
+  height: 5px;
+  background: #6ec6ff;
+  display: block;
+  margin-top: 20px;
+  border-radius: 3px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.btn-login {
+  background: #418cfb;
+  color: #fff;
+  font-weight: 600;
+}
+input[type=submit]{
+  cursor: pointer;
+}
+
