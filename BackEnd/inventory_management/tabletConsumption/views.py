@@ -5,6 +5,16 @@ from .models import TabletConsumption
 from rest_framework.decorators import api_view
 from signup.models import Medical_Store_Details
 from medicine.models import Medicine
+import csv
+from django.views.decorators.csrf import csrf_exempt
+import pandas as pd
+from django.http import JsonResponse
+import json
+import pandas as pd
+from keras.models import load_model
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler
+
+
 
 # Function to get year and custom week number
 def get_custom_week_number(date):
@@ -59,3 +69,78 @@ def record_tablet_consumption(request):
         print("Error:",e)
     
     return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+# Reusable function to generate the CSV file from the database
+def generate_csv_file():
+    try:
+        file_path = "tablet_consumption.csv"
+        with open(file_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            header = ["Clinic ID", "Tablet Name", "Year"] + [f"Week {i}" for i in range(1, 53)]
+            writer.writerow(header)
+
+            records = TabletConsumption.objects.all()
+            for record in records:
+                row = [
+                    record.clinic.id,
+                    record.tablet_name,
+                    record.year
+                ] + [getattr(record, f"week_{i}") for i in range(1, 53)]
+                writer.writerow(row)
+
+        return file_path
+    except Exception as e:
+        print("CSV Generation Error:", e)
+        return None
+
+# === Load and prepare dataset once ===
+df = pd.read_csv('E:\\MediProject\\medicine_inventory\\BackEnd\\inventory_management\\tabletConsumption\\LSTM\\tablet_consumption.csv')  # Adjust the path as needed
+df.columns = df.columns.str.strip()
+week_cols = [col for col in df.columns if col.startswith('Week')]
+df_long = df.melt(id_vars=['Clinic ID', 'Tablet Name', 'Year'], value_vars=week_cols,
+                  var_name='Week', value_name='Consumption')
+df_long['Week'] = df_long['Week'].str.extract('(\d+)').astype(int)
+
+# === Encode features and prepare scalers ===
+clinic_encoder = LabelEncoder()
+tablet_encoder = LabelEncoder()
+df_long['ClinicEncoded'] = clinic_encoder.fit_transform(df_long['Clinic ID'])
+df_long['TabletEncoded'] = tablet_encoder.fit_transform(df_long['Tablet Name'])
+
+# === Create and fit scaler ===
+scaler = MinMaxScaler()
+all_consumption = df_long['Consumption'].values.reshape(-1, 1)
+scaler.fit(all_consumption)
+
+# === Load trained model ===
+model = load_model("E:\\MediProject\\medicine_inventory\\BackEnd\\inventory_management\\tabletConsumption\\LSTM\\medicine_consumption_predictor.h5")
+
+@csrf_exempt
+def predict_for_clinic_week(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            clinic_id = data['clinic_id']
+            week_num = get_custom_week_number(datetime.now())
+
+            sub_df = df_long[(df_long['Clinic ID'] == clinic_id) & (df_long['Week'] == week_num)]
+            result = {}
+
+            for tablet in sub_df['Tablet Name'].unique():
+                tab_df = sub_df[sub_df['Tablet Name'] == tablet].sort_values('Year')
+                if len(tab_df) < 2:
+                    continue
+                seq = tab_df['Consumption'].values[:-1]
+                seq_scaled = scaler.transform(seq.reshape(-1, 1)).reshape(1, -1, 1)
+                pred_scaled = model.predict(seq_scaled, verbose=0)
+                pred = scaler.inverse_transform(pred_scaled)[0][0]
+                result[tablet] = int(round(pred))
+                print(result)
+
+            return JsonResponse(result)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Only POST requests allowed'}, status=405)

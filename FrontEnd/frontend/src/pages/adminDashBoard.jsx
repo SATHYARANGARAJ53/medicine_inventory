@@ -20,7 +20,7 @@ export default function AdminDashboard() {
 
   const fetchUserDetails = async () => {
     const token = localStorage.getItem("jwtToken");
-  
+
     if (!token) {
       console.log("No token found in localStorage");
       navigate("/login");
@@ -33,7 +33,7 @@ export default function AdminDashboard() {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -56,13 +56,24 @@ export default function AdminDashboard() {
     getUserData();
   }, []);
 
+
+
+  // Add this function inside AdminDashboard component
+  const isNearExpiry = (expiryDate) => {
+    const today = new Date();
+    const expiry = new Date(expiryDate);
+    const diffDays = (expiry - today) / (1000 * 60 * 60 * 24);
+    return diffDays <= 7;
+  };
+
+
   const [medicines, setMedicines] = useState([]);
   const [newTabletName, setNewTabletName] = useState("");
   const [newQuantity, setNewQuantity] = useState("");
   const [newExpiryDate, setNewExpiryDate] = useState("");
 
   // Add new medicine
-  const addMedicine = async(e) => {
+  const addMedicine = async (e) => {
     e.preventDefault();
 
     const tabletName = newTabletName.trim();
@@ -80,12 +91,12 @@ export default function AdminDashboard() {
         "Clinic_Id": clinicid
       };
 
-      try{
+      try {
         const response = await axios.post("http://127.0.0.1:8000/api/add-medicine/", newMedicine);
         setRefresh(prev => !prev);
         console.log(response.data.message);
       }
-      catch(error){
+      catch (error) {
         console.log(error);
       }
     }
@@ -134,7 +145,7 @@ export default function AdminDashboard() {
           clinic_id: clinicid
         }
       });
-  
+
       console.log(response.data.message);
       setRefresh(prev => !prev);
     } catch (error) {
@@ -156,6 +167,9 @@ export default function AdminDashboard() {
 
       <main>
         <form action="#">
+          <h3>Available Medicine List</h3>
+          {/* <Medicinelist clinicid={clinicid} /> */}
+
           <table className="bp4-html-table modifier table-bordered text-center table-striped">
             <thead>
               <tr>
@@ -167,65 +181,80 @@ export default function AdminDashboard() {
               </tr>
             </thead>
             <tbody>
-            {medicines.map((med) => (
-              <tr key={med.id}>
-                <td>{med.id}</td>
-                <td>
-                  <EditableText
-                    onChange={(value) =>
-                      setMedicines((prev) =>
-                        prev.map((m) =>
-                          m.id === med.id ? { ...m, tablet_name: value } : m
-                        )
-                      )
-                    }
-                    value={med.tablet_name}
-                  />
-                </td>
-                <td>
-                  <EditableText
-                    onChange={(value) =>
-                      setMedicines((prev) =>
-                        prev.map((m) =>
-                          m.id === med.id ? { ...m, quantity_available: value } : m
-                        )
-                      )
-                    }
-                    value={med.quantity_available}
-                  />
-                </td>
-                <td>
-                  <EditableText
-                    type="date"
-                    onChange={(value) =>
-                      setMedicines((prev) =>
-                        prev.map((m) =>
-                          m.id === med.id ? { ...m, expiry_date: value } : m
-                        )
-                      )
-                    }
-                    value={med.expiry_date}
-                  />
-                </td>
-                <td>
-                  <Button
-                    intent="primary p-3 w-45 rounded"
-                    onClick={() => updateMedicine(med)}
-                  >
-                    Update
-                  </Button>
-                  &nbsp;
-                  <Button
-                    intent="danger p-3 w-45 rounded"
-                    onClick={() => deleteMedicine(med.tablet_name)}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))}
+              {medicines.map((med) => {
+                const nearExpiry = isNearExpiry(med.expiry_date);
+                const lowStock = med.quantity_available <= 80;
 
+                return (
+                  <tr key={med.id}>
+                    <td>{med.id}</td>
+                    <td>
+                      <EditableText
+                        onChange={(value) =>
+                          setMedicines((prev) =>
+                            prev.map((m) =>
+                              m.id === med.id ? { ...m, tablet_name: value } : m
+                            )
+                          )
+                        }
+                        value={med.tablet_name}
+                      />
+                    </td>
+                    <td
+                      style={{
+                        backgroundColor: lowStock ? 'yellow' : 'transparent',
+                        fontWeight: lowStock ? 'bold' : 'normal',
+                      }}
+                    >
+                      <EditableText
+                        onChange={(value) =>
+                          setMedicines((prev) =>
+                            prev.map((m) =>
+                              m.id === med.id ? { ...m, quantity_available: value } : m
+                            )
+                          )
+                        }
+                        value={med.quantity_available}
+                      />
+                    </td>
+                    <td
+                      style={{
+                        color: nearExpiry ? 'red' : 'black',
+                        fontWeight: nearExpiry ? 'bold' : 'normal',
+                      }}
+                    >
+                      <EditableText
+                        type="date"
+                        onChange={(value) =>
+                          setMedicines((prev) =>
+                            prev.map((m) =>
+                              m.id === med.id ? { ...m, expiry_date: value } : m
+                            )
+                          )
+                        }
+                        value={med.expiry_date}
+                      />
+                    </td>
+                    <td>
+                      <Button
+                        intent="primary p-3 w-45 rounded"
+                        onClick={() => updateMedicine(med)}
+                      >
+                        Update
+                      </Button>
+                      &nbsp;
+                      <Button
+                        intent="danger p-3 w-45 rounded"
+                        onClick={() => deleteMedicine(med.tablet_name)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
+
             <tfoot>
               <tr>
                 <td></td>
@@ -261,6 +290,6 @@ export default function AdminDashboard() {
           </table>
         </form>
       </main>
-    </>
-  );
+    </>
+  );
 }

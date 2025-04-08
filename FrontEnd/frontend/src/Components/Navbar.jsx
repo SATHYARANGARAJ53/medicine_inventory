@@ -6,7 +6,7 @@ export default function Navbar(props) {
       <div>
         <Link className="navbar-brand" to="/">
           <span style={{ fontSize: "1.5em" }}>
-            <span style={{ fontWeight: 500, color: "red" }}>MED</span>VAULT
+            <span style={{ fontWeight: 500, color: "red" }}>MED</span><span className="text-primary">VAULT</span>
           </span>
         </Link>
       </div>
@@ -15,29 +15,34 @@ export default function Navbar(props) {
         <ul className="navbar">
           
             <li className="nav-item">
-              <Link className="nav-link" to="/register">
-                Register
+              <Link className="nav-link text-primary" to="/">
+                Home
               </Link>
             </li>
           
            
             <li>
-              <Link className="nav-link" to="/login">
-                Login
+              <Link className="nav-link text-primary" to="/dashboard">
+                DashBoard
               </Link>
             </li>
 
-          
+            <li>
+              <Link className="nav-link text-primary" to="/orders">
+                Purchases
+              </Link>
+            </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
-                Dashboard
+              <Link className="nav-link text-primary" to="/reports">
+                Reports
               </Link>
             </li>
           
           
             <li>
               <a
-                className="nav-link"
+                className="nav-link text-primary"
                 onClick={props.logoutUser}
                 style={{ cursor: "pointer" }}
               >

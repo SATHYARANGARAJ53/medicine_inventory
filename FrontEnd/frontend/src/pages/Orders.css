@@ -1,0 +1,73 @@
+.Ordercontainer{
+    width: 100vw;
+    height: 80vh;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    place-items: center;
+    gap: 2rem;
+  }
+  .clinicOrder{
+      display: flex;
+      flex-direction: column;
+      padding-left: 5rem;
+      padding-right: 5rem;
+      box-shadow: 10px 8px 15px 15px rgb(244, 236, 236);
+      width: 40rem;
+      height: 40rem;
+      border-radius: 20px;
+  }
+  .clinicOrder input{
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+  }
+  .clinicOrder h1{
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      gap: 1.2rem;
+  }
+  .ManOrder h1{
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      gap: 1.2rem;
+  }
+  .buttons{
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+  }
+  .clinicOrder button{
+      width: 15rem;
+      height: 3rem;
+  }
+  .ManOrder{
+      display: flex;
+      flex-direction: column;
+      padding-left: 5rem;
+      padding-right: 5rem;
+      box-shadow: 10px 8px 15px 15px rgb(244, 236, 236);
+      width: 40rem;
+      height: 40rem;
+      border-radius: 20px;
+  }
+  
+  .ManOrder input{
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+  }
+  .buttons{
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+  }
+  .ManOrder button{
+      width: 15rem;
+      height: 3rem;
+  }

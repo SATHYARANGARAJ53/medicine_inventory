@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Orders from "./pages/Orders";
+import Reports from "./pages/Reports";
 
 function App() {
 
@@ -17,6 +19,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashBoard/>} />
           <Route path="/admin" element={<AdminDashboard/>} />
+          <Route path="/orders" element={<Orders/>} />
+          <Route path="/reports" element={<Reports/>}/>
         </Routes>
       </BrowserRouter>
     </>
