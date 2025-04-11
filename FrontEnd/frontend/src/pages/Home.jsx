@@ -2,13 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import Footer from "../Components/Footer";
+import icon from '../assets/R.png';
 
 function Home() {
   return (
     <>
       <section className="Home">
         <div className="content">
-          <h1 className="text-primary text-md-danger">AIIMS - AI DRIVEN INVENTORY MANAGEMENT SYSTEM</h1>
+          <h1 className="text-primary">AI<img src={icon}/>MS</h1>
+          <p className="rr">( AI-Driven Medicine Inventory Management System )</p>
           <br />
           <p>
            A next generation solution designed to revoltionize stock control,demand forecasting,and supply chain optimization.Powered by advanced artificial intelligence and it automates inventory tracking,minimizes wastage,and ensures real-time stock accuracy.With predictive analytics and intelligent automation, business can optimize procurement ,reduce costs,and enhance operational efficiency.Experience the future of inventory management with AIIMS-where efficiency meets intelligence.

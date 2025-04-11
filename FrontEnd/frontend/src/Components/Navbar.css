@@ -8,3 +8,7 @@ ul{
     font-size: 1.3em;
     list-style-type: none;
 }
+#icon{
+    width: 3rem;
+    height: 3rem;
+}
