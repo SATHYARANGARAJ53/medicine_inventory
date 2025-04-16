@@ -1,20 +1,31 @@
 import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
 import './Reports.css';
-import { useEffect} from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function Reports() {
   const [results, setResults] = useState([]);
   const [showTable, setShowTable] = useState(false);
   const [clinicid, setClinicid] = useState(null);
+  const navigate = useNavigate();
+
+
+  const logoutUser = () => {
+    localStorage.removeItem("jwtToken");
+    console.log("Removed");
+    navigate("/register", { replace: true });
+    return ;
+  };
 
   const fetchUserDetails = async () => {
     const token = localStorage.getItem("jwtToken");
-  
+
     if (!token) {
       console.log("No token found in localStorage");
-      navigate("/login");
-      return;
+      navigate("/login", { replace: true });
+      
     }
     try {
       const response = await fetch("http://127.0.0.1:8000/api/user-details/", {
@@ -23,7 +34,7 @@ function Reports() {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -35,15 +46,14 @@ function Reports() {
   };
 
   useEffect(() => {
-      const getUserData = async () => {
-        const data = await fetchUserDetails();
-        setClinicid(data.clinic_id);
-      };
-  
-      getUserData();
-    }, []);
+    const getUserData = async () => {
+      const data = await fetchUserDetails();
+      setClinicid(data.clinic_id);
+    };
 
-  const handleClick = async () => {
+    getUserData();
+  }, []);
+const handleClick = async () => {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/predict/", {
         method: "POST",
@@ -68,7 +78,7 @@ function Reports() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar logoutUser={logoutUser} />
       <div>
         <button className="btn btn-primary w-25 p-3 predict" onClick={handleClick}>
           Predict

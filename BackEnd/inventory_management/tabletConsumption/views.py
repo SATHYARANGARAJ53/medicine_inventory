@@ -71,7 +71,7 @@ def record_tablet_consumption(request):
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
-# Reusable function to generate the CSV file from the database
+@csrf_exempt
 def generate_csv_file():
     try:
         file_path = "tablet_consumption.csv"
@@ -125,9 +125,22 @@ def predict_for_clinic_week(request):
             week_num = get_custom_week_number(datetime.now())
 
             sub_df = df_long[(df_long['Clinic ID'] == clinic_id) & (df_long['Week'] == week_num)]
+            
+            clinic = get_object_or_404(Medical_Store_Details, clinic_id=clinic_id)
+            print("Clinic object found:", clinic)
+            
+            available_tablets = set(
+                Medicine.objects.filter(clinic_id=clinic)
+                .values_list('tablet_name', flat=True)
+            )
+            
             result = {}
 
             for tablet in sub_df['Tablet Name'].unique():
+                
+                if tablet not in available_tablets:
+                    continue
+
                 tab_df = sub_df[sub_df['Tablet Name'] == tablet].sort_values('Year')
                 if len(tab_df) < 2:
                     continue

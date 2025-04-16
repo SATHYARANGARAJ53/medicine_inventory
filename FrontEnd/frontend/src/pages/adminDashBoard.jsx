@@ -10,6 +10,9 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [clinicid, setClinicid] = useState(null);
   const [refresh, setRefresh] = useState(false);
+  const [editRowId, setEditRowId] = useState(null);
+  const [tempValues, setTempValues] = useState({});
+
 
 
   const logoutUser = () => {
@@ -97,7 +100,7 @@ export default function AdminDashboard() {
         console.log(response.data.message);
       }
       catch (error) {
-        console.log(error);
+        alert(error.response.data.error);
       }
     }
   };
@@ -117,24 +120,16 @@ export default function AdminDashboard() {
   }, [refresh]);
 
   // Update medicine
-  function updateMedicine(id) {
-    const medicine = medicines.find((m) => m["s.no"] === id);
-    fetch("/data/medicine.json", {
-      method: "PUT",
-      body: JSON.stringify(medicine),
-      headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then(() => {
-        Toaster.create().show({
-          message: "Medicine updated successfully",
-          intent: "success",
-          timeout: 3000,
-        });
-      });
+  function updateMedicine(id, updatedData) {
+      try {
+        const response = axios.put("http://127.0.0.1:8000/api/update-medicine/", updatedData);
+        setRefresh(prev => !prev);
+      }
+      catch (error) {
+        console.log("Error")
+      }
   }
+
 
   // Delete medicine
   const deleteMedicine = async (tabletName) => {
@@ -184,64 +179,109 @@ export default function AdminDashboard() {
               {medicines.map((med) => {
                 const nearExpiry = isNearExpiry(med.expiry_date);
                 const lowStock = med.quantity_available <= 80;
+                const isEditing = editRowId === med.tablet_id;
 
                 return (
-                  <tr key={med.id}>
-                    <td>{med.id}</td>
-                    <td>
-                      <EditableText
-                        onChange={(value) =>
-                          setMedicines((prev) =>
-                            prev.map((m) =>
-                              m.id === med.id ? { ...m, tablet_name: value } : m
-                            )
-                          )
+                  <tr key={med.tablet_id}>
+                  <td>{med.tablet_id}</td>
+
+                  <td>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={tempValues.tablet_name !== undefined ? tempValues.tablet_name : med.tablet_name}
+                        onChange={(e) =>
+                          setTempValues((prev) => ({
+                            ...prev,
+                            tablet_name: e.target.value,
+                          }))
                         }
-                        value={med.tablet_name}
                       />
-                    </td>
-                    <td
-                      style={{
-                        backgroundColor: lowStock ? 'yellow' : 'transparent',
-                        fontWeight: lowStock ? 'bold' : 'normal',
-                      }}
-                    >
-                      <EditableText
-                        onChange={(value) =>
-                          setMedicines((prev) =>
-                            prev.map((m) =>
-                              m.id === med.id ? { ...m, quantity_available: value } : m
-                            )
-                          )
+                    ) : (
+                      med.tablet_name
+                    )}
+                  </td>
+
+                  <td
+                    style={{
+                      backgroundColor: lowStock ? 'yellow' : 'transparent',
+                      fontWeight: lowStock ? 'bold' : 'normal',
+                    }}
+                  >
+                    {isEditing ? (
+                      <input
+                        type="number"
+                        value={tempValues.quantity_available !== undefined ? tempValues.quantity_available : med.quantity_available}
+                        onChange={(e) =>
+                          setTempValues((prev) => ({
+                            ...prev,
+                            quantity_available: e.target.value,
+                          }))
                         }
-                        value={med.quantity_available}
                       />
-                    </td>
-                    <td
-                      style={{
-                        color: nearExpiry ? 'red' : 'black',
-                        fontWeight: nearExpiry ? 'bold' : 'normal',
-                      }}
-                    >
-                      <EditableText
+                    ) : (
+                      med.quantity_available
+                    )}
+                  </td>
+
+                  <td
+                    style={{
+                      color: nearExpiry ? 'red' : 'black',
+                      fontWeight: nearExpiry ? 'bold' : 'normal',
+                    }}
+                  >
+                    {isEditing ? (
+                      <input
                         type="date"
-                        onChange={(value) =>
-                          setMedicines((prev) =>
-                            prev.map((m) =>
-                              m.id === med.id ? { ...m, expiry_date: value } : m
-                            )
-                          )
+                        value={tempValues.expiry_date !== undefined ? tempValues.expiry_date : med.expiry_date}
+
+                        onChange={(e) =>
+                          setTempValues((prev) => ({
+                            ...prev,
+                            expiry_date: e.target.value,
+                          }))
                         }
-                        value={med.expiry_date}
                       />
-                    </td>
-                    <td>
+                    ) : (
+                      med.expiry_date
+                    )}
+                  </td>
+
+                  <td>
+                    {isEditing ? (
+                      <Button
+                        intent="success p-3 w-45 rounded"
+                        onClick={() => {
+                          const updatedMed = {
+                            Tablet_Id: med.tablet_id,
+                            Tablet_Name: tempValues.tablet_name || med.tablet_name,
+                            Available_Quantity: tempValues.quantity_available || med.quantity_available,
+                            Expiry_Date: tempValues.expiry_date || med.expiry_date,
+                            Price: med.price,
+                            Clinic_Id: med.clinic_id,
+                          };
+                          updateMedicine(med.tablet_id, updatedMed);
+                          setEditRowId(null);
+                          setTempValues({});
+                        }}
+                      >
+                        OK
+                      </Button>
+                    ) : (
                       <Button
                         intent="primary p-3 w-45 rounded"
-                        onClick={() => updateMedicine(med)}
+                        onClick={() => {
+                          setEditRowId(med.tablet_id);
+                          setTempValues({
+                            tablet_name: med.tablet_name,
+                            quantity_available: med.quantity_available,
+                            expiry_date: med.expiry_date,
+                          });
+                        }}
                       >
                         Update
                       </Button>
+                    )}
                       &nbsp;
                       <Button
                         intent="danger p-3 w-45 rounded"
