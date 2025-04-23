@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import icon from "../assets/R.png"
 export default function Navbar(props) {
   return (
-    <nav className="navbar bg-dark pt-4 pb-4">
+    <nav className="nav navbar bg-dark pt-4 pb-4">
       <div>
         <Link className="navbar-brand" to="/">
-          <span style={{ fontSize: "1.5em" }}>
-            <span style={{ fontWeight: 500, color: "red" }}>MED</span><span className="text-primary">VAULT</span>
+          <span style={{ fontSize: "1.5em" }} className="spanImg">
+            <span style={{ fontWeight: 500, color: "red" }}>MED</span><img src={icon} alt="navbarIcon" /><span className="text-light">VAULT</span>
           </span>
         </Link>
       </div>
@@ -15,26 +16,26 @@ export default function Navbar(props) {
         <ul className="navbar">
           
             <li className="nav-item">
-              <Link className="nav-link text-primary" to="/">
+              <Link className="nav-link text-light" to="/">
                 Home
               </Link>
             </li>
           
            
             <li>
-              <Link className="nav-link text-primary" to="/dashboard">
+              <Link className="nav-link text-light" to="/dashboard">
                 DashBoard
               </Link>
             </li>
 
             <li>
-              <Link className="nav-link text-primary" to="/orders">
+              <Link className="nav-link text-light" to="/orders">
                 Purchases
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link className="nav-link text-primary" to="/reports">
+            <li className="nav-item text-light">
+              <Link className="nav-link text-light" to="/reports">
                 Reports
               </Link>
             </li>
@@ -42,7 +43,7 @@ export default function Navbar(props) {
           
             <li>
               <a
-                className="nav-link text-primary"
+                className="nav-link text-light"
                 onClick={props.logoutUser}
                 style={{ cursor: "pointer" }}
               >

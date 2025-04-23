@@ -6,6 +6,8 @@ import RegisterPage from "./pages/RegisterPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Orders from "./pages/Orders";
 import Reports from "./pages/Reports";
+import Bill from "./pages/Bill";
+
 
 function App() {
 
@@ -21,6 +23,7 @@ function App() {
           <Route path="/admin" element={<AdminDashboard/>} />
           <Route path="/orders" element={<Orders/>} />
           <Route path="/reports" element={<Reports/>}/>
+          <Route path="/bill" element={<Bill/>}/>
         </Routes>
       </BrowserRouter>
     </>

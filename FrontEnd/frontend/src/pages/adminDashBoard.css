@@ -15,7 +15,9 @@
       height: 3.5em;
   }
   
-  
+  .top span{
+    text-align: left !important;
+  }
   .billSection{
     display: flex;
     gap: 1em;

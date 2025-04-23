@@ -42,6 +42,10 @@ export default function AdminDashboard() {
       }
       const data = await response.json();
       console.log("User details:", data);
+      setUser({
+        name:data.username,
+        email:data.email,
+      })
       setClinicid(data.clinic_id);
       setRefresh(prev => !prev);
       return data;
@@ -130,7 +134,7 @@ export default function AdminDashboard() {
       }
   }
 
-
+  var nameOfUser=user.name;
   // Delete medicine
   const deleteMedicine = async (tabletName) => {
     try {
@@ -147,32 +151,31 @@ export default function AdminDashboard() {
       console.error("Error deleting medicine:", error);
     }
   };
-
+ 
   return (
     <>
       <Navbar logoutUser={logoutUser} />
       <div className="top">
         <span className="h2 text-danger">
-          Hello,
-          <br />
-          <hr />
+          Hello,&nbsp;
           <span className="text-primary">{user.name}</span>
+          <hr />
         </span>
       </div>
 
       <main>
         <form action="#">
-          <h3>Available Medicine List</h3>
+          <h3 className="text-light mt-3 mb-5">Available Medicine List</h3>
           {/* <Medicinelist clinicid={clinicid} /> */}
 
           <table className="bp4-html-table modifier table-bordered text-center table-striped">
             <thead>
               <tr>
-                <th>S.No</th>
-                <th>Tablet Name</th>
-                <th>Available Quantity</th>
-                <th>Expiry Date</th>
-                <th>Needed Action</th>
+                <th className="text-light">S.No</th>
+                <th className="text-light">Tablet Name</th>
+                <th className="text-light">Available Quantity</th>
+                <th className="text-light">Expiry Date</th>
+                <th className="text-light">Needed Action</th>
               </tr>
             </thead>
             <tbody>
@@ -183,9 +186,9 @@ export default function AdminDashboard() {
 
                 return (
                   <tr key={med.tablet_id}>
-                  <td>{med.tablet_id}</td>
+                  <td className="text-light">{med.tablet_id}</td>
 
-                  <td>
+                  <td className="text-light">
                     {isEditing ? (
                       <input
                         type="text"
@@ -226,7 +229,7 @@ export default function AdminDashboard() {
 
                   <td
                     style={{
-                      color: nearExpiry ? 'red' : 'black',
+                      color: nearExpiry ? 'red' : 'white',
                       fontWeight: nearExpiry ? 'bold' : 'normal',
                     }}
                   >

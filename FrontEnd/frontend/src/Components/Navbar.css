@@ -1,10 +1,18 @@
 nav{
     display: flex;
     justify-content: space-between;
+    
 }
 ul{
     display: flex;
     flex-direction: row;
     font-size: 1.3em;
     list-style-type: none;
+    
+}
+ul li{
+
+}
+.spanImg img{
+    width: 2.5rem;
 }

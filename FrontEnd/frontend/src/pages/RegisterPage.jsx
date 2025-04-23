@@ -4,8 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import axios from "axios";
 
+
+
+
 function RegisterPage() {
   const navigate = useNavigate();
+  
   const initialStateErrors = {
     email: { required: false },
     password: { required: false },
@@ -13,6 +17,13 @@ function RegisterPage() {
     customError: null,
     district: null,
   };
+
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+    clinic_name: "",
+    district: "",
+  });
 
   const [errors, setErrors] = useState(initialStateErrors);
 
@@ -50,16 +61,13 @@ function RegisterPage() {
     setErrors({ ...errors });
   };
 
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-    clinic_name: "",
-    district: "",
-  });
+ 
 
   const handleInputs = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
+
+
   //!
 
   // if (isAuthenticated()) {
@@ -69,31 +77,34 @@ function RegisterPage() {
 
   //   return <Navigate to="/dashboard" />;
   // }
+
   return (
     <>
       <Navbar />
       <section className="register-block">
-        <div className="container text-light">
+        <div className="container text-dark">
           <div className="row">
             <div className="col register-sec">
-              <h2 className="text-center">Register Now</h2>
+              <h2 className="text-center text-primary">Register Now</h2>
               <form className="register-form" action="" onSubmit={handleSubmit}>
                 <div>
                   <label
                     htmlFor="exampleInputEmail1"
-                    className="text-uppercase"
+                    className="fw-bold fs-6"
                   >
                     Clinic Name
                   </label>
-
+                  <br />
+                  <br />
                   <input
                     type="text"
                     className="form-control"
                     name="clinic_name"
-                    id=""
+                    id="clinic_name"
                     onChange={handleInputs}
                   />
                   <br />
+    
                   {errors.clinic_name.required ? (
                     <span className="text-danger">Clinic Name is required.</span>
                   ) : null}
@@ -102,10 +113,11 @@ function RegisterPage() {
                 <div className="form-group">
                   <label
                     htmlFor="exampleInputEmail1"
-                    className="text-uppercase"
+                    className=" fs-6 fw-bold"
                   >
                     District
                   </label>
+                  <br />
                   <br />
                   <select
                     className="form-control form-select"
@@ -245,15 +257,16 @@ function RegisterPage() {
                   </select>
 
                 </div>
-
+                <br />
                 <div className="form-group">
                   <label
                     htmlFor="exampleInputEmail1"
-                    className="text-uppercase"
+                    className="fs-6 fw-bold"
                   >
                     Email
                   </label>
-
+<br />
+<br />
                   <input
                     type="text"
                     className="form-control"
@@ -268,12 +281,15 @@ function RegisterPage() {
                 </div>
 
                 <div className="form-group">
+                  <br />
                   <label
                     htmlFor="exampleInputPassword1"
-                    className="text-uppercase"
+                    className="text-uppercas fs-6 fw-bold"
                   >
                     Password
                   </label>
+                  <br />
+                  <br />
                   <input
                     className="form-control"
                     type="password"
@@ -334,5 +350,4 @@ function RegisterPage() {
     </>
   );
 }
-
 export default RegisterPage;

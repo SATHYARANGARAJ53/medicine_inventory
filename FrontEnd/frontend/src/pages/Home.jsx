@@ -2,28 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import Footer from "../Components/Footer";
+import icon from '../assets/R.png';
 
 function Home() {
   return (
     <>
       <section className="Home">
         <div className="content">
-          <h1 className="text-primary text-md-danger">AI - DRIVEN MEDICINE INVENTORY MANAGAGEMENT SYSTEM</h1>
+          <h1 className="text-light">AI<img src={icon}/>MS</h1>
+          <p className="rr">( AI-Driven Medicine Supply Management System )</p>
           <br />
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores
-            eos esse ratione consequuntur, pariatur et tempora quaerat
-            accusantium, asperiores delectus minima saepe ipsam eum itaque quas
-            architecto odio sunt incidunt dignissimos. Saepe asperiores aut
-            cumque nam, natus iure sit ad quam esse aliquid, sunt in incidunt
-            inventore officia nobis a Lorem ipsum dolor, sit amet consectetur
-            adipisicing elit. Velit incidunt magnam minus consequuntur eius a
-            maiores eligendi. Voluptates, distinctio explicabo. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora quas nulla nemo officia, maiores nobis aspernatur vitae perspiciatis recusandae odit.
+          <p className="text-light">
+           A next generation solution designed to revoltionize stock control,demand forecasting,and supply chain optimization.Powered by advanced artificial intelligence and it minimizes wastage,and ensures real-time stock accuracy.With predictive analytics and intelligent automation, business can optimize procurement ,reduce costs,and enhance operational efficiency.Experience the future of supply management with AIIMS-where efficiency meets intelligence.
           </p>
           <br />
           <Link to="/register">
-            <button className="butt btn btn-primary">
-              <span>Get Started</span>
+            <button className="butt btn btn-light border-light">
+              <span className="text-light">Get Started</span>
             </button>
           </Link>
         </div>

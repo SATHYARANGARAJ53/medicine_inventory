@@ -1,4 +1,4 @@
-.top {
+.Top {
   display: flex;
   justify-content: space-between;
   margin-top: 2em;
@@ -6,7 +6,7 @@
   margin-right: 1em;
 }
 
-.top input{
+.Top input{
     width: 30em;
     height: 3.5em;
 }

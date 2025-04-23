@@ -5,44 +5,44 @@ import axios from "axios";
 import "./DashBoard.css";
 
 
+
 export default function DashBoard() {
   const navigate = useNavigate();
   const [medicines, setMedicines] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [editableRows, setEditableRows] = useState({});
   const [billData,setBillData] = useState({});
-  const [user,setUser]=useState({name:"",email:""});
+  const [user,setUser]=useState({name:"",email:""})
+
+
+
+  
 
   const handleGenerateBill = () => {
-    const data = [];
+    const data = {};
     let totalAmount = 0;
+    navigate('/bill')
   
     medicines.forEach((medicine, index) => {
       const row = editableRows[index];
       if (row && parseInt(row.inputValue) > 0) {
         const quantity = parseInt(row.inputValue);
-        const price = medicine.price;
-        const totalPrice = quantity * price;
-  
-        data.push({
-          tablet_name: medicine.tablet_name,
-          quantity,
-          price,
-          total: totalPrice,
-        });
-  
-        totalAmount += totalPrice;
+        saleTablet(medicine.tablet_name,quantity);
+        data[medicine.tablet_name] = quantity;
+        totalAmount += quantity * medicine.price;
       }
     });
   
-    if (data.length === 0) {
-      alert("Please enter quantity for at least one tablet.");
-      return;
-    }
+    // if (Object.keys(data).length === 0) {
+    //   alert("Please enter quantity for at least one tablet.");
+    //   return;
+    // }
+    
+    // setBillData(data);
+    // alert(`Total Bill: $${totalAmount.toFixed(2)}`);
   
-    // Send data to /bill route
-    sessionStorage.setItem("billData", JSON.stringify({ billItems: data, totalAmount, clinicid }));
-    navigate('/bill');
+    // 🔁 You can now send `billData` to the backend as needed
+    console.log("Bill to send:", data);
   };
   
 
@@ -91,7 +91,7 @@ export default function DashBoard() {
     }));
   };
 
-  const saleTabletButton = (tablet_name, quantity, index, medicine,e) => {
+  const saleTabletButton = (tablet_name, quantity, index, medicine) => {
     const value = parseInt(quantity);
     const maxQty = medicine.quantity_available;
   
@@ -105,10 +105,9 @@ export default function DashBoard() {
           inputValue: value,
         },
       }));
-     e.preventDefault();
+
     } else {
       alert("Enter a valid quantity before proceeding.");
-      return;
     }
   };
   
@@ -211,14 +210,14 @@ export default function DashBoard() {
       <Navbar logoutUser={logoutUser} />
 
       <div className="top">
-        <span className="h2 text-danger">Hello <span className="text-light">{user.name}</span><hr /></span>
-        <input
+        <span className="h2 text-danger">Hello , <span className="text-light">{user.name}</span><hr /></span>
+        {/* <input
           type="search"
           className="form-control"
           placeholder="Search everything...."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        /> */}
       </div>
 
       <main>
@@ -234,7 +233,7 @@ export default function DashBoard() {
               </tr>
             </thead>
             <tbody>
-              {medicines
+              {/* {medicines
                 .filter((medicine) => {
                   const query = searchQuery.toLowerCase();
                   return (
@@ -256,7 +255,7 @@ export default function DashBoard() {
                       <td>{medicine.tablet_name}</td>
                       <td>{medicine.expiry_date}</td>
                       <td>{medicine.quantity_available}</td>
-                      <td>₹{medicine.price}</td>
+                      <td>${medicine.price}</td>
                       <td className="group d-flex align-items-center gap-2">
                         {row.isEditable ? (
                           <>
@@ -272,34 +271,42 @@ export default function DashBoard() {
                           </>
                         ) : (
                           <>
-
                             <span>{row.inputValue}</span>
-                            {row.inputValue?<button
+                            <button
                               className="btn btn-primary"
                               onClick={() => handleEditClick(index)}
                             >
-                              Add
-                            </button>:
-                              <button
-                              className="btn btn-primary"
-                              onClick={(e) =>
-                                saleTabletButton(medicine.tablet_name, row.inputValue, index, medicine,e)
-                                
-                              }
-                              disabled={!row.inputValue}
-                            >
-                              Add
-                            </button>}
-                            
+                              Edit
+                            </button>
                           </>
                         )}
-                     
-                       
-                      
+
+                        <button
+                          className="btn btn-primary"
+                          onClick={() =>
+                            saleTabletButton(medicine.tablet_name, row.inputValue, index, medicine)
+                          }
+                          disabled={!row.inputValue}
+                        >
+                          Add
+                        </button>
                       </td>
                     </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
                   );
-                })}
+                })} */}
+                <tr>
+                  <td><input type="search" name="search" id="search" className="form-control"/></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
             </tbody>
 
           </table>

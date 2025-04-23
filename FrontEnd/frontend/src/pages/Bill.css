@@ -1,0 +1,22 @@
+.Bill{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.BillContainer{
+    background-color: rgb(246, 242, 242);
+    width: 35rem;
+    height: 45rem;
+    border-radius: 2rem;
+    box-shadow: 8px px 20px 3px rgb(128, 121, 121);
+}
+.top{
+    display: flex;
+    justify-content: space-evenly;
+}
+.BillContainer img{
+    width: 7rem;
+    height: 6.5rem;
+}
