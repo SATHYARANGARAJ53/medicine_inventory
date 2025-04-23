@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("",include("signup.urls")),
     path("",include("medicine.urls")),
-    path("",include("tabletConsumption.urls"))
+    path("",include("tabletConsumption.urls")),
+    path("",include("RedistributionRequest.urls"))
 ]

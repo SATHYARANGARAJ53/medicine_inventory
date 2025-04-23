@@ -71,3 +71,62 @@
       width: 15rem;
       height: 3rem;
   }
+  .request-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .buttons-inline {
+    display: flex;
+  }
+  
+  .main-heading {
+    text-align: center;
+    font-size: 2rem;
+    margin: 30px 0 20px;
+    font-weight: bold;
+  }
+  
+  .request-list {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .request-card-big {
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 1.3rem;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .status-badge {
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 10px;
+  }
+  
+  .status-badge.fulfilled {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-badge.rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+  }  
